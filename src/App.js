@@ -3,6 +3,37 @@ import Card from "./components/Card"
 import NavBar from "./components/NavBar"
 import { getAllPokemon, getPokemon } from './services/pokemon.js';
 import './App.css';
+import Button from '@material-ui/core/Button';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+
+const useStyles = makeStyles((theme) => ({
+    button: {
+      margin: theme.spacing(1),
+    },
+    root: {
+        '& > *': {
+          marginTop: theme.spacing(2),
+        },
+      },
+  }));
+
+  const BorderLinearProgress = withStyles((theme) => ({
+  root: {
+    height: 20,
+    borderRadius: 5,
+  },
+  colorPrimary: {
+    backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+  },
+  bar: {
+    borderRadius: 5,
+    backgroundColor: '#1a90ff',
+  },
+}))(LinearProgress);
 
 function App() {
     const [ pokemonData, setPokemonData ] = useState([])
@@ -10,6 +41,7 @@ function App() {
     const [ prevUrl, setPrevUrl ] = useState("")
     const [ loading, setLoading ] = useState(true)
     const initialUrl = "https://pokeapi.co/api/v2/pokemon"
+    const classes = useStyles();
 
     useEffect(() => {
         async function fetchData() {
@@ -53,21 +85,59 @@ function App() {
     return (
         <div>
             {
-             loading ? <h1>Loading...</h1> :(
+             loading ? 
+             <div>
+                <BorderLinearProgress color="secondary" />
+                <h2>LOADING...</h2>
+                </div>
+                :(
                 <>
                 <NavBar />
                 <div className="btn">
-                    <button onClick={prev}>Prev</button>
-                    <button onClick={next}>Next</button>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<ArrowBackIcon />}
+                    onClick={prev}
+                >
+                    Prev
+                </Button>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<ArrowForwardIcon />}
+                    onClick={next}
+                >
+                    Next
+                </Button>
                 </div>
                 <div className="grid-container">
-                {pokemonData.map((pokemon,i) => {
+                {pokemonData.map((pokemon,i) => 
+                {
                     return <Card key={i} pokemon={pokemon}/>
                 })}
                 </div>
                 <div className="btn">
-                    <button onClick={prev}>Prev</button>
-                    <button onClick={next}>Next</button>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<ArrowBackIcon />}
+                    onClick={prev}
+                >
+                    Prev
+                </Button>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<ArrowForwardIcon />}
+                    onClick={next}
+                >
+                    Next
+                </Button>
                 </div>
                 </>
              )

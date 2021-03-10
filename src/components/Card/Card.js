@@ -35,7 +35,6 @@ function Card({pokemon}) {
                     <p className="title">Ability</p>
                     <p>{pokemon.abilities[0].ability.name}</p>
                 </div>
-
             </div>
         </div>
     )
