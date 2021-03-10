@@ -8,6 +8,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import filter from './components/NavBar/NavBar'
 
 
 const useStyles = makeStyles((theme) => ({

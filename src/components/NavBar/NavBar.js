@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -64,8 +64,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchAppBar() {
+const NavBar = (props) => {
   const classes = useStyles();
+  const [filter, setFilter] = useState("");
+
+  const handleSearchChange = (e) => {
+    setFilter(e.target.value);
+  };
 
   return (
     <div className={classes.root}>
@@ -87,6 +92,7 @@ export default function SearchAppBar() {
               <SearchIcon />
             </div>
             <InputBase
+              onChange={handleSearchChange}
               placeholder="Find a Pokemon..."
               classes={{
                 root: classes.inputRoot,
@@ -99,4 +105,6 @@ export default function SearchAppBar() {
       </AppBar>
     </div>
   );
-}
+};
+
+export default NavBar
