@@ -3,14 +3,11 @@ import Card from "./components/Card"
 import NavBar from "./components/NavBar"
 import { getAllPokemon, getPokemon } from './services/pokemon.js';
 import './App.css';
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
-
-
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -43,23 +40,7 @@ function App() {
     const [ prevUrl, setPrevUrl ] = useState("")
     const [ loading, setLoading ] = useState(true)
     const initialUrl = "https://pokeapi.co/api/v2/pokemon"
-    const [filter, setFilter] = useState("");
-    const classes = useStyles();
 
-    const handleSearchChange = (e) => {
-        setFilter(e.target.value);
-      };
-
-    useEffect(() => {
-        async function fetchData() {
-            let response = await getAllPokemon(initialUrl);
-            setNextUrl(response.next);
-            setPrevUrl(response.previous);
-            await loadingPokemon(response.results);
-            setLoading(false);
-        }
-        fetchData();
-    }, []);
 
     const next = async () => {
         setLoading(true);
@@ -87,6 +68,24 @@ function App() {
         }))
         setPokemonData(_pokemonData)
     }
+
+    const [filter, setFilter] = useState("");
+    const classes = useStyles();
+
+    const handleSearchChange = (e) => {
+        setFilter(e.target.value);
+      };
+
+    useEffect(() => {
+        async function fetchData() {
+            let response = await getAllPokemon(initialUrl);
+            setNextUrl(response.next);
+            setPrevUrl(response.previous);
+            await loadingPokemon(response.results);
+            setLoading(false);
+        }
+        fetchData();
+    }, []);
 
     return (
         <div>
@@ -119,13 +118,17 @@ function App() {
                     Next
                 </Button>
                 </div>
+
+
                 <div className="grid-container">
                 {pokemonData.map((pokemon,i) => 
                 { 
-                    if (pokemon.name.includes(filter)) {
-                    return <Card key={i} pokemon={pokemon}/>}
-                })}
+                    return (pokemon.name.includes(filter)) &&  <Card key={i} pokemon={pokemon}/>}
+
+                )}
                 </div>
+
+
                 <div className="btn">
                 <Button
                     variant="contained"

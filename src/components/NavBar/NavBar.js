@@ -1,13 +1,19 @@
 import React from "react";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import MenuIcon from '../../images/580b57fcd9996e24bc43c31f.png'
 import Button from '@material-ui/core/Button';
+// import IconButton from '@material-ui/core/IconButton';
+// import MenuIcon from '../../images/580b57fcd9996e24bc43c31f.png'
+import GrowMenu from '../GrowMenu/GrowMenu'
+// import Drawer from '../Drawer/Drawer'
+// import { Route, Switch } from "react-router-dom";
+// import About from '../About';
+// import Contact from "../Contact";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,14 +82,7 @@ const NavBar = ({filter, setFilter, handleSearchChange}) => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-              <img src={MenuIcon} height= "50px" alt="pokeball" className={classes.logo}/>
-          </IconButton>
+        <GrowMenu/>
           <Typography className={classes.title} variant="h3" noWrap>
             Pokedex
           </Typography>
@@ -102,7 +101,7 @@ const NavBar = ({filter, setFilter, handleSearchChange}) => {
             />
           </div>
           <Button style={{ marginLeft: 16 }} variant="contained" color="secondary" value="Refresh Page" onClick={refreshPage}> 
-              Reset Pokedex
+              Clear Filters
           </Button>
         </Toolbar>
       </AppBar>
