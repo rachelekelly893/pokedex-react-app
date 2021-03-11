@@ -5,8 +5,11 @@ import pokemonType from "../../helpers/pokemonTypes.js"
 function Card({pokemon}) {
     return (
         <div className="Card">
+            <div className="Card__no">
+            #{String(pokemon.id).padStart(3, '0')}
+            </div>
             <div className="Card__img">
-                <img src={pokemon.sprites.front_default} alt="" />
+                <img src={pokemon.sprites.front_default} alt={pokemon.name} />
             </div>
             <div className="Card__name">
                 {pokemon.name}

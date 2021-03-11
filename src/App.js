@@ -8,7 +8,8 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import filter from './components/NavBar/NavBar'
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,15 +43,19 @@ function App() {
     const [ prevUrl, setPrevUrl ] = useState("")
     const [ loading, setLoading ] = useState(true)
     const initialUrl = "https://pokeapi.co/api/v2/pokemon"
+    const [filter, setFilter] = useState("");
     const classes = useStyles();
+
+    const handleSearchChange = (e) => {
+        setFilter(e.target.value);
+      };
 
     useEffect(() => {
         async function fetchData() {
             let response = await getAllPokemon(initialUrl);
             setNextUrl(response.next);
             setPrevUrl(response.previous);
-            let pokemon = await loadingPokemon(response.results)
-            console.log(pokemon);
+            await loadingPokemon(response.results);
             setLoading(false);
         }
         fetchData();
@@ -58,20 +63,20 @@ function App() {
 
     const next = async () => {
         setLoading(true);
-        let data = await getAllPokemon(nextUrl)
-        await loadingPokemon(data.results)
+        let data = await getAllPokemon(nextUrl);
+        await loadingPokemon(data.results);
         setNextUrl(data.next);
-        setPrevUrl(data.previous)
+        setPrevUrl(data.previous);
         setLoading(false);
     }
 
     const prev = async () => {
         if(!prevUrl) return;
         setLoading(true);
-        let data = await getAllPokemon(prevUrl)
-        await loadingPokemon(data.results)
+        let data = await getAllPokemon(prevUrl);
+        await loadingPokemon(data.results);
         setNextUrl(data.next);
-        setPrevUrl(data.previous)
+        setPrevUrl(data.previous);
         setLoading(false);
     }
 
@@ -89,11 +94,11 @@ function App() {
              loading ? 
              <div>
                 <BorderLinearProgress color="secondary" />
-                <h2>LOADING...</h2>
+                <h2>CATCHING POKEMON...</h2>
                 </div>
                 :(
                 <>
-                <NavBar />
+                <NavBar filter={filter} setFilter={setFilter} handleSearchChange={handleSearchChange}/>
                 <div className="btn">
                 <Button
                     variant="contained"
@@ -116,8 +121,9 @@ function App() {
                 </div>
                 <div className="grid-container">
                 {pokemonData.map((pokemon,i) => 
-                {
-                    return <Card key={i} pokemon={pokemon}/>
+                { 
+                    if (pokemon.name.includes(filter)) {
+                    return <Card key={i} pokemon={pokemon}/>}
                 })}
                 </div>
                 <div className="btn">

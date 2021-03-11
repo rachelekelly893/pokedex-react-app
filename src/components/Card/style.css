@@ -7,15 +7,11 @@ p {
     border-radius: 10px;
 }
 
-.bounce:hover {
-    animation-name: bounce;
-    animation-timing-function: ease;
+.Card:hover {
+    background-color: #4583d4b7;
+    transform: scale(1.05);
+    transition: all .2s ease-in-out;
 }
-@keyframes bounce {
-    0%   { transform: translateY(0); }
-    50%  { transform: translateY(-100px); }
-    100% { transform: translateY(0); }
-  }
 
 .Card__img {
     text-align: center;
@@ -38,6 +34,13 @@ p {
     text-align: center;
     text-transform: capitalize;
     font-weight: 800;
+}
+
+.Card__no {
+    text-align: right;
+    font-weight: 600;
+    padding-right: 20px;
+    padding-top: 10px;
 }
 
 .Card__info {

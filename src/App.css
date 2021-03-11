@@ -25,3 +25,15 @@
     color: #fff;
     font-size: 1em;
 }
+
+span.MuiIconButton-label > img {
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+    transition:         transform .8s ease-in-out;
+    height:8vh;
+}
+
+
+span.MuiIconButton-label > img:hover  {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}

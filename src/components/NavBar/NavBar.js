@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,6 +7,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '../../images/580b57fcd9996e24bc43c31f.png'
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,13 +65,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = (props) => {
+const NavBar = ({filter, setFilter, handleSearchChange}) => {
   const classes = useStyles();
-  const [filter, setFilter] = useState("");
 
-  const handleSearchChange = (e) => {
-    setFilter(e.target.value);
-  };
+  function refreshPage() {
+    window.location.reload(false);
+  }
 
   return (
     <div className={classes.root}>
@@ -82,9 +82,9 @@ const NavBar = (props) => {
             color="inherit"
             aria-label="open drawer"
           >
-              <img src={MenuIcon} height= "50px" alt="pokeball" className={classes.logo} />
+              <img src={MenuIcon} height= "50px" alt="pokeball" className={classes.logo}/>
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography className={classes.title} variant="h3" noWrap>
             Pokedex
           </Typography>
           <div className={classes.search}>
@@ -101,6 +101,9 @@ const NavBar = (props) => {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
+          <Button style={{ marginLeft: 16 }} variant="contained" color="secondary" value="Refresh Page" onClick={refreshPage}> 
+              Reset Pokedex
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
