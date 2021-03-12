@@ -64,7 +64,7 @@ function SimpleDialog(props) {
                         <p className="title">HP</p>
                         <p>{pokemon.stats[0].base_stat}</p>
                     </div> */}
-                    <StatChart chartData={pokemon} /> 
+                    <StatChart pokemon={pokemon} /> 
             </div>
         </Dialog>
     )

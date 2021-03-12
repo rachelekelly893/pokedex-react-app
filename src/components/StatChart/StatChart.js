@@ -1,34 +1,28 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {HorizontalBar} from 'react-chartjs-2';
 
-class StatChart extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      chartData: 
-      {
-        labels: ['Hp', 'Attack', 'Defense', 'Special Attack', 'Special Defense','Speed'],
-        datasets: [
-          {
-            data:[ 
-              props.chartData.stats[0].base_stat,
-              props.chartData.stats[1].base_stat, 
-              props.chartData.stats[2].base_stat, 
-              props.chartData.stats[3].base_stat, 
-              props.chartData.stats[4].base_stat, 
-              props.chartData.stats[5].base_stat],
-            backgroundColor:['rgb(31, 238, 76)', 'rgb(226, 33, 33)', 'rgb(245, 241, 18)', 'rgb(18, 237, 245)', 'rgb(60, 18, 245)', 'rgb(181, 18, 245)']
-          }
-        ]
-      }
-    }
-  }
+const StatChart = ({pokemon}) => {
 
-  render(){
+  const [chartData, setChartData] = useState({
+    labels: ['Hp', 'Attack', 'Defense', 'Special Attack', 'Special Defense','Speed'],
+    datasets: [
+      {
+        data:[ 
+          pokemon.stats[0].base_stat,
+          pokemon.stats[1].base_stat, 
+          pokemon.stats[2].base_stat, 
+          pokemon.stats[3].base_stat, 
+          pokemon.stats[4].base_stat, 
+          pokemon.stats[5].base_stat],
+        backgroundColor:['rgb(31, 238, 76)', 'rgb(226, 33, 33)', 'rgb(245, 241, 18)', 'rgb(18, 237, 245)', 'rgb(60, 18, 245)', 'rgb(181, 18, 245)']
+      }
+    ]
+  })
+
     return (
       <div className="chart">
         <HorizontalBar
-          data={this.state.chartData}
+          data={chartData}
           options={{
             legend: {
               display: false,
@@ -51,6 +45,5 @@ class StatChart extends Component{
       </div>
     )
   }
-}
 
 export default StatChart;
