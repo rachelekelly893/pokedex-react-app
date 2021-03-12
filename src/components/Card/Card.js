@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import "./style.css"
 import pokemonType from "../../helpers/pokemonTypes.js"
-import { Button, Dialog, Box } from '@material-ui/core';
+import { Button, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import SimpleDialog from '../SimpleDialog/SimpleDialog';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -15,24 +16,6 @@ const useStyles = makeStyles((theme) => ({
         },
       },
   }));
-
-function SimpleDialog(props) {
-    const { onClose, selectedValue, open } = props
-
-    const handleClose = () => {
-        onClose(selectedValue)
-    }
-
-    return (
-        <Dialog
-        onClose={handleClose}
-        open={open}
-        >
-            Stuff about the pokemon
-        </Dialog>
-    )
-}
-
 
 function Card({pokemon}) {
 
@@ -53,13 +36,13 @@ function Card({pokemon}) {
     return (
         <div className="Card">
             <div className="Card__no">
-            #{String(pokemon.id).padStart(3, '0')}
+            <p>#{String(pokemon.id).padStart(3, '0')}</p>
             </div>
             <div className="Card__img">
                 <img src={pokemon.sprites.front_default} alt={pokemon.name} />
             </div>
             <div className="Card__name">
-                {pokemon.name}
+                <h3>{pokemon.name}</h3>
             </div>
             <div className="Card__types">
                 {pokemon.types.map(type => {
@@ -67,24 +50,12 @@ function Card({pokemon}) {
                         <div 
                         className="Card__type" 
                         style={{backgroundColor: pokemonType[type.type.name]}}>
-                            {type.type.name}
+                            <p>{type.type.name}</p>
                         </div>
                     )
                 })}
             </div>
             <div className="Card__info">
-                <div className="Card__data Card__data--weight">
-                    <p className="title">Weight</p>
-                    <p>{pokemon.weight}</p>
-                </div>
-                <div className="Card__data Card__data--height">
-                    <p className="title">Height</p>
-                    <p>{pokemon.height}</p>
-                </div>
-                <div className="Card__data Card__data--ability">
-                    <p className="title">Ability</p>
-                    <p>{pokemon.abilities[0].ability.name}</p>
-                </div>
                 <Box display="flex" justifyContent="center">
                     <Button 
                     variant="contained"
@@ -93,7 +64,8 @@ function Card({pokemon}) {
                         onClick={handleClickOpen}>More Info
                     </Button>
                     <SimpleDialog 
-                        selectedPokemon={selectedValue}
+                        selecetedValue={selectedValue}
+                        pokemon={pokemon}
                         open={open}
                         onClose={handleClose}/>
                 </Box>
