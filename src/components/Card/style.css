@@ -1,5 +1,7 @@
 p {
     margin: 0;
+    text-align: center;
+    text-transform: capitalize;
 }
 
 .Card {
@@ -32,14 +34,13 @@ p {
 
 .Card__name {
     text-align: center;
-    text-transform: capitalize;
     font-weight: 800;
+    text-transform: capitalize;
 }
 
 .Card__no {
     text-align: right;
     font-weight: 600;
-    padding-right: 20px;
     padding-top: 10px;
 }
 

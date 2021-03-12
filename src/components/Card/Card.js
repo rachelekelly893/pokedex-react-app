@@ -3,7 +3,7 @@ import "./style.css"
 import pokemonType from "../../helpers/pokemonTypes.js"
 import { Button, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SimpleDialog from '../SimpleDialog/SimpleDialog';
+import DetailsDialog from '../DetailsDialog/DetailsDialog';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -61,9 +61,9 @@ function Card({pokemon}) {
                     variant="contained"
                         color="secondary"
                         className={classes.button} 
-                        onClick={handleClickOpen}>More Info
+                        onClick={handleClickOpen}>View Card
                     </Button>
-                    <SimpleDialog 
+                    <DetailsDialog 
                         selecetedValue={selectedValue}
                         pokemon={pokemon}
                         open={open}

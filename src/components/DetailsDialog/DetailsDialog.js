@@ -5,7 +5,7 @@ import './style.css'
 import StatChart from '../StatChart/StatChart'
 
 
-function SimpleDialog(props) {
+function DetailsDialog(props) {
     const { onClose, selectedValue, open, pokemon } = props
 
     const handleClose = () => {
@@ -15,20 +15,27 @@ function SimpleDialog(props) {
 
     return (
         <Dialog
+        PaperProps={{
+            style: {
+              backgroundColor: 'transparent',
+              boxShadow: 'none',
+            },
+          }}
         fullWidth
         maxWidth="sm"
         onClose={handleClose}
         open={open}
+        
         >
             <div className="Dialog">
-                <div className="Card__no">
+                <div className="Details__name">
+                    <h1>{pokemon.name}</h1>
+                </div>
+                <div className="Details__no">
                     <p>#{String(pokemon.id).padStart(3, '0')}</p>
                 </div>
-                <div className="Card__img">
-                    <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-                </div>
-                <div className="Card__name">
-                    <h1>{pokemon.name}</h1>
+                <div className="Details__img">
+                    <img src={pokemon.sprites.front_default} alt={pokemon.name}/>
                 </div>
                 <div className="Card__data Card__data--weight">
                         <p className="title">Weight</p>
@@ -60,14 +67,10 @@ function SimpleDialog(props) {
                         )
                     })}
                 </div>
-                    {/* <div className="Card__data Card__data--hp">
-                        <p className="title">HP</p>
-                        <p>{pokemon.stats[0].base_stat}</p>
-                    </div> */}
                     <StatChart pokemon={pokemon} /> 
             </div>
         </Dialog>
     )
 }
 
-export default SimpleDialog
+export default DetailsDialog
