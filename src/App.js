@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Card from './components/Card';
 import NavBar from './components/NavBar';
+import TypeSelect from './components/TypeSelect/TypeSelect'
 import { getAllPokemon, getPokemon } from './services/pokemon.js';
 import './App.css';
+
 import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MenuIcon from '../src/images/580b57fcd9996e24bc43c31f.png';
 
+
+// STYLES
 const BorderLinearProgress = withStyles((theme) => ({
 	root: {
 		height: 20,
@@ -21,7 +25,12 @@ const BorderLinearProgress = withStyles((theme) => ({
 	}
 }))(LinearProgress);
 
+
+// APP
+
 function App() {
+
+	// RETRIEVE POKEMON
 	const [ pokemonData, setPokemonData ] = useState([]);
 	const [ loading, setLoading ] = useState(true);
 	const initialUrl = 'https://pokeapi.co/api/v2/pokemon?limit=151';
@@ -34,12 +43,7 @@ function App() {
 			})
 		);
 		setPokemonData(_pokemonData);
-	};
-
-	const [ filter, setFilter ] = useState('');
-
-	const handleSearchChange = (e) => {
-		setFilter(e.target.value);
+		setFilteredPokemon(_pokemonData);
 	};
 
 	useEffect(() => {
@@ -51,6 +55,38 @@ function App() {
 		fetchData();
 	}, []);
 
+	
+	// FILTER POKEMON
+	const [ nameFilter, setNameFilter ] = useState('');
+	const [ filteredPokemon, setFilteredPokemon ] = useState([]);
+	const [ typeFilter, setTypeFilter ] = useState('');
+	// FILTER BY NAME
+	const handleNameChange = (e) => {
+		let name = e.target.value;
+		filterName(name);
+	};
+
+	const filterName = (name) => {
+		setNameFilter(name);
+		let nameFiltered = pokemonData.filter((poke) => poke.name.toLowerCase().includes(name.toLowerCase()));
+		setFilteredPokemon(nameFiltered)
+	};
+	// FILTER BY TYPE
+	const handleTypeChange = (e) => {
+		let type = e.target.value;
+		filterType(type);
+	};
+
+	const filterType = (type) => {
+		setTypeFilter(type);
+		let typeFiltered = pokemonData.filter((poke) => 
+			poke.types[1] ? 
+			poke.types[0].type.name.includes(type) || poke.types[1].type.name.includes(type) : 
+			poke.types[0].type.name.includes(type));
+			setFilteredPokemon(typeFiltered)
+	}
+
+	// RENDER
 	return (
 		<div>
 			{loading ? (
@@ -61,11 +97,10 @@ function App() {
 				</div>
 			) : (
 				<div className="page-content">
-					<NavBar filter={filter} setFilter={setFilter} handleSearchChange={handleSearchChange} />
-
+					<NavBar nameFilter={nameFilter} setNameFilter={setNameFilter} handleNameChange={handleNameChange} typeFilter ={typeFilter} setTypeFilter={setTypeFilter} set handleTypeChange={handleTypeChange}/>
 					<div className="grid-container">
-						{pokemonData.map((pokemon, i) => {
-							return pokemon.name.includes(filter) && <Card key={i} pokemon={pokemon} />;
+						{filteredPokemon.map((pokemon, i) => {
+							return <Card key={i} pokemon={pokemon} />;
 						})}
 					</div>
 				</div>

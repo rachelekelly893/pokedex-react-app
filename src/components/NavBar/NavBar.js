@@ -1,6 +1,8 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import TypeSelect from '../TypeSelect/TypeSelect'
+
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -64,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const NavBar = ({ filter, setFilter, handleSearchChange }) => {
+const NavBar = ({ nameFilter, setNameFilter, handleNameChange, typeFilter, setTypeFilter, handleTypeChange}) => {
 	const classes = useStyles();
 
 	function refreshPage() {
@@ -79,13 +81,16 @@ const NavBar = ({ filter, setFilter, handleSearchChange }) => {
 					<Typography className={classes.title} variant="h3" noWrap>
 						Pokedex
 					</Typography>
+					<div className={classes.types}>
+						<TypeSelect typeFilter ={typeFilter} setTypeFilter={setTypeFilter} set handleTypeChange={handleTypeChange}/>
+						</div>
 					<div className={classes.search}>
 						<div className={classes.searchIcon}>
 							<SearchIcon />
 						</div>
 						<InputBase
-							onChange={handleSearchChange}
-							placeholder="Find a Pokemon..."
+							onChange={handleNameChange}
+							placeholder="Search By Name......"
 							classes={{
 								root: classes.inputRoot,
 								input: classes.inputInput
