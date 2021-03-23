@@ -1,36 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Card from './components/Card';
 import NavBar from './components/NavBar';
-import TypeSelect from './components/TypeSelect/TypeSelect'
 import { getAllPokemon, getPokemon } from './services/pokemon.js';
 import './App.css';
-
-import { withStyles } from '@material-ui/core/styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import MenuIcon from '../src/images/580b57fcd9996e24bc43c31f.png';
+import Loading from './components/Loading/Loading'
 
 
-// STYLES
-const BorderLinearProgress = withStyles((theme) => ({
-	root: {
-		height: 20,
-		borderRadius: 5
-	},
-	colorPrimary: {
-		backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700]
-	},
-	bar: {
-		borderRadius: 5,
-		backgroundColor: '#1a90ff'
-	}
-}))(LinearProgress);
 
 
 // APP
-
 function App() {
 
-	// RETRIEVE POKEMON
+	// RETRIEVE POKEMON DATA FROM API
 	const [ pokemonData, setPokemonData ] = useState([]);
 	const [ loading, setLoading ] = useState(true);
 	const initialUrl = 'https://pokeapi.co/api/v2/pokemon?limit=151';
@@ -60,21 +41,35 @@ function App() {
 	const [ nameFilter, setNameFilter ] = useState('');
 	const [ filteredPokemon, setFilteredPokemon ] = useState([]);
 	const [ typeFilter, setTypeFilter ] = useState('');
-	// FILTER BY NAME
+	const [ hasName, setHasName ] = useState(false)
+	const [ hasType, setHasType ] = useState(false)
+	
+	// FILTER BY NAME (then type)
 	const handleNameChange = (e) => {
 		let name = e.target.value;
 		filterName(name);
+		if (name !== '') {
+			setHasName(true)
+		}
 	};
 
 	const filterName = (name) => {
 		setNameFilter(name);
 		let nameFiltered = pokemonData.filter((poke) => poke.name.toLowerCase().includes(name.toLowerCase()));
-		setFilteredPokemon(nameFiltered)
+		let typeNameFiltered = nameFiltered.filter((poke) => 
+			poke.types[1] ? 
+			poke.types[0].type.name.includes(typeFilter) || poke.types[1].type.name.includes(typeFilter) : 
+			poke.types[0].type.name.includes(typeFilter))
+				hasType ? setFilteredPokemon(typeNameFiltered) : setFilteredPokemon(nameFiltered)
 	};
-	// FILTER BY TYPE
+
+	// FILTER BY TYPE (then name)
 	const handleTypeChange = (e) => {
 		let type = e.target.value;
 		filterType(type);
+		if (type !== '') {
+			setHasType(true)
+		}
 	};
 
 	const filterType = (type) => {
@@ -83,18 +78,15 @@ function App() {
 			poke.types[1] ? 
 			poke.types[0].type.name.includes(type) || poke.types[1].type.name.includes(type) : 
 			poke.types[0].type.name.includes(type));
-			setFilteredPokemon(typeFiltered)
+			let nameTypeFiltered = typeFiltered.filter((poke) => poke.name.toLowerCase().includes(nameFilter.toLowerCase()));
+			hasName ? setFilteredPokemon(nameTypeFiltered) : setFilteredPokemon(typeFiltered)
 	}
 
 	// RENDER
 	return (
 		<div>
 			{loading ? (
-				<div>
-					<BorderLinearProgress color="secondary" />
-					<h2>CATCHING POKEMON...</h2>
-					<img src={MenuIcon} height="200em" alt="pokeball" id="pokelogo" />
-				</div>
+				<Loading/>
 			) : (
 				<div className="page-content">
 					<NavBar nameFilter={nameFilter} setNameFilter={setNameFilter} handleNameChange={handleNameChange} typeFilter ={typeFilter} setTypeFilter={setTypeFilter} set handleTypeChange={handleTypeChange}/>

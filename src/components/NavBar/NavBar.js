@@ -12,7 +12,9 @@ import GrowMenu from '../GrowMenu/GrowMenu';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
+		backgroundColor: 'red',
+		boxShadow: 'pink'
 	},
 	menuButton: {
 		marginRight: theme.spacing(2)
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 		[theme.breakpoints.up('sm')]: {
 			display: 'block'
 		},
-		color: 'White'
+		color: 'White',
 	},
 	search: {
 		position: 'relative',
@@ -66,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const NavBar = ({ nameFilter, setNameFilter, handleNameChange, typeFilter, setTypeFilter, handleTypeChange}) => {
+const NavBar = ({ handleNameChange, typeFilter, setTypeFilter, handleTypeChange}) => {
 	const classes = useStyles();
 
 	function refreshPage() {
@@ -90,7 +92,7 @@ const NavBar = ({ nameFilter, setNameFilter, handleNameChange, typeFilter, setTy
 						</div>
 						<InputBase
 							onChange={handleNameChange}
-							placeholder="Search By Name......"
+							placeholder="Filter By Name..."
 							classes={{
 								root: classes.inputRoot,
 								input: classes.inputInput
