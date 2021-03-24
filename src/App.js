@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Card from './components/Card';
 import NavBar from './components/NavBar';
 import { getAllPokemon, getPokemon } from './services/pokemon.js';
 import './App.css';
 import Loading from './components/Loading/Loading'
-
-
+import Pokemon from './components/Pokemon/Pokemon';
+import BasicPagination from './components/BasicPagination/BasicPagination'
 
 
 // APP
@@ -82,6 +81,16 @@ function App() {
 			hasName ? setFilteredPokemon(nameTypeFiltered) : setFilteredPokemon(typeFiltered)
 	}
 
+	// PAGINATION
+	const [currentPage, setCurrentPage] = useState(1);
+  	const [pokemonPerPage] = useState(20);
+
+	const indexOfLastPokemon = currentPage * pokemonPerPage;
+  	const indexOfFirstPokemon = indexOfLastPokemon - pokemonPerPage;
+  	const currentPokemon = filteredPokemon.slice(indexOfFirstPokemon, indexOfLastPokemon);
+
+	const paginate = pageNumber => setCurrentPage(pageNumber);
+
 	// RENDER
 	return (
 		<div>
@@ -90,11 +99,17 @@ function App() {
 			) : (
 				<div className="page-content">
 					<NavBar nameFilter={nameFilter} setNameFilter={setNameFilter} handleNameChange={handleNameChange} typeFilter ={typeFilter} setTypeFilter={setTypeFilter} set handleTypeChange={handleTypeChange}/>
-					<div className="grid-container">
-						{filteredPokemon.map((pokemon, i) => {
-							return <Card key={i} pokemon={pokemon} />;
-						})}
-					</div>
+					<BasicPagination
+						pokemonPerPage={pokemonPerPage}
+						totalPokemon={filteredPokemon.length}
+						paginate={paginate}
+					/>
+					<Pokemon pokemon={currentPokemon} loading={loading} />
+					<BasicPagination
+						pokemonPerPage={pokemonPerPage}
+						totalPokemon={filteredPokemon.length}
+						paginate={paginate}
+					/>
 				</div>
 			)}
 		</div>

@@ -1,27 +1,35 @@
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
 
 
 const useStyles = makeStyles((theme) => ({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
-          backgroundColor: fade(theme.palette.common.white, 0.25)
-      },
-      width: '10em',
-      height: '4em'
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-  }));
+  
+  // types: {
+	// 	position: 'relative',
+	// 	borderRadius: theme.shape.borderRadius,
+	// 	backgroundColor: fade(theme.palette.common.white, 0.15),
+	// 	'&:hover': {
+	// 	  backgroundColor: fade(theme.palette.common.white, 0.25),
+	// 	},
+	// 	marginLeft: 0,
+	// 	width: '100%',
+	// 	[theme.breakpoints.up('sm')]: {
+	// 	  marginLeft: theme.spacing(1),
+	// 	  width: 'auto',
+	// 	},
+	// },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  }
+}));
 
 const TypeSelect = ({ handleTypeChange }) => {
 
@@ -29,12 +37,15 @@ const TypeSelect = ({ handleTypeChange }) => {
 
 
     return (
-        <FormControl variant="filled" className={classes.formControl}>
+      <div>
+      <FormControl className={classes.formControl}>
+          <InputLabel 
+          style={{ color: '#c9c9db' }}
+          id="demo-simple-select-label">Type</InputLabel>
         <Select
-        style={{ height: '2.5em',
-    color: '#c9c9db' }}
-          labelId="demo-simple-select-filled-label"
-          id="demo-simple-select-filled"
+          style={{ color: '#c9c9db' }}
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
           onChange={handleTypeChange}
         >
             <MenuItem value="">All</MenuItem>
@@ -57,10 +68,8 @@ const TypeSelect = ({ handleTypeChange }) => {
             <MenuItem value="steel">Steel</MenuItem>
             <MenuItem value="water">Water</MenuItem>
           </Select>
-          <FormHelperText
-          style={{ color: '#c9c9db' }}
-          >Filter by Type</FormHelperText>
         </FormControl> 
+        </div>
     )
 }
 

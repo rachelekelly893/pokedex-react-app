@@ -37,7 +37,7 @@ function Card({ pokemon }) {
 				<p>#{String(pokemon.id).padStart(3, '0')}</p>
 			</div>
 			<div className="Card__img">
-				<img src={pokemon.sprites.front_default} alt={pokemon.name} />
+				<img src={pokemon.sprites.front_default} alt={pokemon.name} width="160"/>
 			</div>
 			<div className="Card__name">
 				<h3>{pokemon.name}</h3>
