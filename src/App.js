@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from './components/NavBar';
+import NavBar from './components/NavBar/NavBar';
 import { getAllPokemon, getPokemon } from './services/pokemon.js';
 import './App.css';
 import Loading from './components/Loading/Loading'
@@ -13,7 +13,8 @@ function App() {
 	// RETRIEVE POKEMON DATA FROM API
 	const [ pokemonData, setPokemonData ] = useState([]);
 	const [ loading, setLoading ] = useState(true);
-	const initialUrl = 'https://pokeapi.co/api/v2/pokemon?limit=151';
+	const initialUrl = 'https://pokeapi.co/api/v2/pokemon?limit=898';
+	
 
 	const loadingPokemon = async (data) => {
 		let _pokemonData = await Promise.all(
@@ -62,7 +63,7 @@ function App() {
 				hasType ? setFilteredPokemon(typeNameFiltered) : setFilteredPokemon(nameFiltered)
 	};
 
-	// FILTER BY TYPE (then name)
+	// FILTER BY TYPE
 	const handleTypeChange = (e) => {
 		let type = e.target.value;
 		filterType(type);
@@ -84,12 +85,13 @@ function App() {
 	// PAGINATION
 	const [currentPage, setCurrentPage] = useState(1);
   	const [pokemonPerPage] = useState(20);
-
 	const indexOfLastPokemon = currentPage * pokemonPerPage;
   	const indexOfFirstPokemon = indexOfLastPokemon - pokemonPerPage;
   	const currentPokemon = filteredPokemon.slice(indexOfFirstPokemon, indexOfLastPokemon);
-
-	const paginate = pageNumber => setCurrentPage(pageNumber);
+	
+	const handlePageChange = (event, value) => {
+		setCurrentPage(value);
+	};
 
 	// RENDER
 	return (
@@ -102,13 +104,15 @@ function App() {
 					<BasicPagination
 						pokemonPerPage={pokemonPerPage}
 						totalPokemon={filteredPokemon.length}
-						paginate={paginate}
+						handlePageChange={handlePageChange}
+						currentPage={currentPage}
 					/>
 					<Pokemon pokemon={currentPokemon} loading={loading} />
 					<BasicPagination
 						pokemonPerPage={pokemonPerPage}
 						totalPokemon={filteredPokemon.length}
-						paginate={paginate}
+						handlePageChange={handlePageChange}
+						currentPage={currentPage}
 					/>
 				</div>
 			)}

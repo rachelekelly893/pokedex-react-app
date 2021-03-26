@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
@@ -8,6 +9,8 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '../../images/580b57fcd9996e24bc43c31f.png';
+
+import AboutDialog from '../AboutDialog/AboutDialog'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -55,6 +58,19 @@ export default function MenuListComposition() {
 		[ open ]
 	);
 
+	// DIALOGS
+	const [ dialogOpen, setDialogOpen ] = useState(false);
+	const [ selectedValue, setSelectedValue ] = useState('');
+
+	const handleDialogClickOpen = () => {
+		setDialogOpen(true);
+	};
+
+	const handleDialogClose = (value) => {
+		setDialogOpen(false);
+		setSelectedValue(value);
+	};
+
 	return (
 		<div>
 			<IconButton
@@ -67,7 +83,7 @@ export default function MenuListComposition() {
 				aria-haspopup="true"
 				onClick={handleToggle}
 			>
-				<img src={MenuIcon} height="50px" alt="pokeball" className={classes.logo} />
+				<img src={MenuIcon} alt="pokeball" className={classes.logo} />
 			</IconButton>
 			<Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
 				{({ TransitionProps, placement }) => (
@@ -78,7 +94,8 @@ export default function MenuListComposition() {
 						<Paper>
 							<ClickAwayListener onClickAway={handleClose}>
 								<MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-									<MenuItem onClick={handleClose}>About</MenuItem>
+									<MenuItem onClick={handleDialogClickOpen}>About</MenuItem>
+									<AboutDialog selecetedValue={selectedValue} dialogOpen={dialogOpen} onDialogClose={handleDialogClose} />
 								</MenuList>
 							</ClickAwayListener>
 						</Paper>

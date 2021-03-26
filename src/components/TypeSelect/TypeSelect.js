@@ -1,47 +1,33 @@
 import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 
-
+// STYLES 
 const useStyles = makeStyles((theme) => ({
-  
-  // types: {
-	// 	position: 'relative',
-	// 	borderRadius: theme.shape.borderRadius,
-	// 	backgroundColor: fade(theme.palette.common.white, 0.15),
-	// 	'&:hover': {
-	// 	  backgroundColor: fade(theme.palette.common.white, 0.25),
-	// 	},
-	// 	marginLeft: 0,
-	// 	width: '100%',
-	// 	[theme.breakpoints.up('sm')]: {
-	// 	  marginLeft: theme.spacing(1),
-	// 	  width: 'auto',
-	// 	},
-	// },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: '10em',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
   }
 }));
 
+
+// COMPONENT
 const TypeSelect = ({ handleTypeChange }) => {
 
     const classes = useStyles();
-
 
     return (
       <div>
       <FormControl className={classes.formControl}>
           <InputLabel 
           style={{ color: '#c9c9db' }}
-          id="demo-simple-select-label">Type</InputLabel>
+          id="demo-simple-select-label">Select Type</InputLabel>
         <Select
           style={{ color: '#c9c9db' }}
           labelId="demo-simple-select-label"

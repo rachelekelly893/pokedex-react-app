@@ -1,14 +1,15 @@
 import React from 'react';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import TypeSelect from '../TypeSelect/TypeSelect'
-
-import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
+
 import GrowMenu from '../GrowMenu/GrowMenu';
+import pokedexLogo from '../../images/pokedexlogo.png'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -19,13 +20,15 @@ const useStyles = makeStyles((theme) => ({
 	menuButton: {
 		marginRight: theme.spacing(2)
 	},
-	title: {
+	logoDiv: {
 		flexGrow: 1,
 		display: 'none',
 		[theme.breakpoints.up('sm')]: {
 			display: 'block'
-		},
-		color: 'White',
+		}
+	},
+	logo: {
+		paddingLeft: '1em'
 	},
 	search: {
 		position: 'relative',
@@ -42,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	  },
 	  searchIcon: {
-		padding: theme.spacing(0, 2),
+		padding: theme.spacing(0, 1),
 		height: '100%',
 		position: 'absolute',
 		pointerEvents: 'none',
@@ -60,15 +63,15 @@ const useStyles = makeStyles((theme) => ({
 		transition: theme.transitions.create('width'),
 		width: '100%',
 		[theme.breakpoints.up('sm')]: {
-		  width: '12ch',
+		  width: '7em',
 		  '&:focus': {
-			width: '20ch',
+			width: '10em',
 		  },
 		},
 	  }
 }));
 
-const NavBar = ({ handleNameChange, typeFilter, setTypeFilter, handleTypeChange}) => {
+const NavBar = ({ handleNameChange, pokemonNames, handleTypeChange}) => {
 	const classes = useStyles();
 
 	function refreshPage() {
@@ -80,9 +83,9 @@ const NavBar = ({ handleNameChange, typeFilter, setTypeFilter, handleTypeChange}
 			<AppBar position="static">
 				<Toolbar>
 					<GrowMenu />
-					<Typography className={classes.title} variant="h3" noWrap>
-						Pokedex
-					</Typography>
+					<div className={classes.logoDiv}>
+						<img src={pokedexLogo} alt="pokedex logo" height='100em' className={classes.logo} />
+					</div> 
 					<TypeSelect handleTypeChange={handleTypeChange}/>
 					<div className={classes.search}>
 						<div className={classes.searchIcon}>
@@ -99,7 +102,7 @@ const NavBar = ({ handleNameChange, typeFilter, setTypeFilter, handleTypeChange}
 						/>
 					</div>
 					<Button
-						style={{ marginLeft: 16,
+						style={{ marginLeft: '.5em'
 						 }}
 						variant="contained"
 						color="secondary"

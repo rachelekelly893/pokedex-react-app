@@ -1,9 +1,10 @@
 import React from 'react';
 import Card from '../Card/Card'
+import Loading from '../Loading/Loading'
 
-const Posts = ({ pokemon, loading }) => {
+const Pokemon = ({ pokemon, loading }) => {
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <Loading/>;
   }
 
   return (
@@ -15,4 +16,4 @@ const Posts = ({ pokemon, loading }) => {
   );
 };
 
-export default Posts;
+export default Pokemon;

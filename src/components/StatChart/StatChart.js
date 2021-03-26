@@ -3,7 +3,7 @@ import { HorizontalBar } from 'react-chartjs-2';
 import './style.css';
 
 const StatChart = ({ pokemon }) => {
-	const [ chartData, setChartData ] = useState({
+	const [ chartData ] = useState({
 		labels: [ 'Hp', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed' ],
 		datasets: [
 			{

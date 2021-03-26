@@ -14,6 +14,8 @@ p {
 	background-color: #4583d4b7;
 	transform: scale(1.05);
 	transition: all .2s ease-in-out;
+	box-shadow: 0 0 1em rgba(33, 33, 33, 0.63); 
+
 }
 
 .Card__img {
@@ -26,11 +28,15 @@ p {
 }
 
 .Card__type {
-	padding: 5px 10px;
-	margin: 10px 10px 10px 0;
+	padding: .5em 1em;
+	margin: .5em .5em .5em 0;
 	border-radius: 5px;
-	background: cyan;
 	color: #fff;
+}
+
+.Card__type > p {
+	font-size: 1.6vw;
+	font-weight: 600;
 }
 
 .Card__name {
@@ -42,17 +48,5 @@ p {
 .Card__no {
 	text-align: right;
 	font-weight: 600;
-	padding-top: 10px;
-}
-
-.Card__info {
-	margin-left: 10px;
-}
-
-.Card__data {
-	padding-bottom: 10px;
-}
-
-.Card__data .title {
-	font-weight: 700;
+	padding-top: 1em;
 }

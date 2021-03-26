@@ -1,8 +1,8 @@
 .chart {
 	border-style: double;
-	margin: 5px 30px;
-	margin-bottom: 20px;
+	margin: .5em 5em;
+	margin-bottom: 1em;
 	border-color: rgb(89, 90, 92);
 	border-radius: 3%;
-	border-width: 10px;
+	border-width: .7em;
 }
