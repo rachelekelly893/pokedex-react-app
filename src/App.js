@@ -43,8 +43,9 @@ function App() {
 	const [ typeFilter, setTypeFilter ] = useState('');
 	const [ hasName, setHasName ] = useState(false)
 	const [ hasType, setHasType ] = useState(false)
+	const [ isSorted, setIsSorted ] = useState(false)
 	
-	// FILTER BY NAME (then type)
+	// FILTER BY NAME
 	const handleNameChange = (e) => {
 		let name = e.target.value;
 		filterName(name);
@@ -55,7 +56,7 @@ function App() {
 
 	const filterName = (name) => {
 		setNameFilter(name);
-		let nameFiltered = pokemonData.filter((poke) => poke.name.toLowerCase().includes(name.toLowerCase()));
+		let nameFiltered = pokemonData.filter((poke) => (poke !== undefined) && poke.name.toLowerCase().includes(name.toLowerCase()));
 		let typeNameFiltered = nameFiltered.filter((poke) => 
 			poke.types[1] ? 
 			poke.types[0].type.name.includes(typeFilter) || poke.types[1].type.name.includes(typeFilter) : 
@@ -74,12 +75,56 @@ function App() {
 
 	const filterType = (type) => {
 		setTypeFilter(type);
-		let typeFiltered = pokemonData.filter((poke) => 
-			poke.types[1] ? 
+		let typeFiltered = pokemonData.filter((poke) => (poke !== undefined) && 
+			(poke.types[1] ? 
 			poke.types[0].type.name.includes(type) || poke.types[1].type.name.includes(type) : 
-			poke.types[0].type.name.includes(type));
+			poke.types[0].type.name.includes(type)))
 			let nameTypeFiltered = typeFiltered.filter((poke) => poke.name.toLowerCase().includes(nameFilter.toLowerCase()));
 			hasName ? setFilteredPokemon(nameTypeFiltered) : setFilteredPokemon(typeFiltered)
+	}
+
+	// SortBy
+	const handleSortChange = (e) => {
+		console.log(e.target.value);
+		let sortBy = e.target.value;
+		sortPokemon(sortBy)
+		if (sortBy !== '') {
+			setIsSorted(true)
+		}
+		
+	};
+
+	const sortPokemon = (sortBy) => {
+		let sortCriteria;
+		if (sortBy === 'ID') {
+			sortCriteria = (a, b) => a.id > b.id ? 1 : -1;
+			}
+		else if (sortBy === 'name') {
+			sortCriteria = (a, b) => a.name > b.name ? 1 : -1;
+		}
+		else if (sortBy === 'type') {
+			sortCriteria = (a, b) => a.types[0].type.name > b.types[0].type.name ? 1 : -1;
+		}
+		else if (sortBy === 'HP') {
+			sortCriteria = (a, b) => a.stats[0].base_stat < b.stats[0].base_stat ? 1 : -1;
+		}
+		else if (sortBy === 'attack') {
+			sortCriteria = (a, b) => a.stats[1].base_stat < b.stats[1].base_stat ? 1 : -1;
+		}
+		else if (sortBy === 'defense') {
+			sortCriteria = (a, b) => a.stats[2].base_stat < b.stats[2].base_stat ? 1 : -1;
+		}
+		else if (sortBy === 'specialAttack') {
+			sortCriteria = (a, b) => a.stats[3].base_stat < b.stats[3].base_stat ? 1 : -1;
+		}
+		else if (sortBy === 'specialDefense') {
+			sortCriteria = (a, b) => a.stats[4].base_stat < b.stats[4].base_stat ? 1 : -1;
+		}
+		else if (sortBy === 'speed') {
+			sortCriteria = (a, b) => a.stats[5].base_stat < b.stats[5].base_stat ? 1 : -1;
+		}
+		setFilteredPokemon((poke)=>[...poke.sort(sortCriteria)])
+		console.log(filteredPokemon)
 	}
 
 	// PAGINATION
@@ -95,12 +140,18 @@ function App() {
 
 	// RENDER
 	return (
-		<div>
+			<div className="page-content">
+				<NavBar 
+				nameFilter={nameFilter} 
+				setNameFilter={setNameFilter} 
+				handleNameChange={handleNameChange} 
+				typeFilter ={typeFilter} setTypeFilter={setTypeFilter} 
+				handleTypeChange={handleTypeChange}
+				handleSortChange={handleSortChange}/>
 			{loading ? (
 				<Loading/>
 			) : (
-				<div className="page-content">
-					<NavBar nameFilter={nameFilter} setNameFilter={setNameFilter} handleNameChange={handleNameChange} typeFilter ={typeFilter} setTypeFilter={setTypeFilter} set handleTypeChange={handleTypeChange}/>
+				<div>
 					<BasicPagination
 						pokemonPerPage={pokemonPerPage}
 						totalPokemon={filteredPokemon.length}
@@ -116,6 +167,7 @@ function App() {
 					/>
 				</div>
 			)}
+		
 		</div>
 	);
 }

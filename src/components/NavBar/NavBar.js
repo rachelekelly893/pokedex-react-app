@@ -2,7 +2,7 @@ import React from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import TypeSelect from '../TypeSelect/TypeSelect'
+
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 
 import GrowMenu from '../GrowMenu/GrowMenu';
 import pokedexLogo from '../../images/pokedexlogo.png'
+import TypeSelect from '../TypeSelect/TypeSelect'
+import SortBy from '../SortBy/SortBy'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -71,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 	  }
 }));
 
-const NavBar = ({ handleNameChange, pokemonNames, handleTypeChange}) => {
+const NavBar = ({ handleNameChange, handleTypeChange, handleSortChange}) => {
 	const classes = useStyles();
 
 	function refreshPage() {
@@ -86,6 +88,7 @@ const NavBar = ({ handleNameChange, pokemonNames, handleTypeChange}) => {
 					<div className={classes.logoDiv}>
 						<img src={pokedexLogo} alt="pokedex logo" height='100em' className={classes.logo} />
 					</div> 
+					<SortBy handleSortChange={handleSortChange}/>
 					<TypeSelect handleTypeChange={handleTypeChange}/>
 					<div className={classes.search}>
 						<div className={classes.searchIcon}>

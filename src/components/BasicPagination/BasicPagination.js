@@ -21,11 +21,12 @@ export default function BasicPagination({ pokemonPerPage, currentPage, totalPoke
       <Pagination 
       count={Math.round(totalPokemon/pokemonPerPage)} 
       currentPage={currentPage}
-      defaultPage={1} 
-      siblingCount={0} 
-      boundaryCount={2} 
+      defaultPage={currentPage} 
+      siblingCount={2} 
+      boundaryCount={1} 
       color="secondary"  
-      onChange={handlePageChange} />
+      onChange={handlePageChange} 
+      />
     </div>
   );
 }

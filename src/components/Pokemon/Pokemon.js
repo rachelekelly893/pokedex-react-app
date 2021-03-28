@@ -10,7 +10,10 @@ const Pokemon = ({ pokemon, loading }) => {
   return (
     <div className="grid-container">
 		{pokemon.map((pokemon, i) => {
-		return <Card key={i} pokemon={pokemon} />;
+      if (pokemon === undefined) {
+        return 
+      } else {
+		return <Card key={i} pokemon={pokemon} />;}
 		})}
 	</div>
   );
