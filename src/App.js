@@ -61,7 +61,8 @@ function App() {
 			poke.types[1] ? 
 			poke.types[0].type.name.includes(typeFilter) || poke.types[1].type.name.includes(typeFilter) : 
 			poke.types[0].type.name.includes(typeFilter))
-				hasType ? setFilteredPokemon(typeNameFiltered) : setFilteredPokemon(nameFiltered)
+				hasType ? setFilteredPokemon(typeNameFiltered) : setFilteredPokemon(nameFiltered);
+				handlePageChange(null, 1)
 	};
 
 	// FILTER BY TYPE
@@ -80,12 +81,12 @@ function App() {
 			poke.types[0].type.name.includes(type) || poke.types[1].type.name.includes(type) : 
 			poke.types[0].type.name.includes(type)))
 			let nameTypeFiltered = typeFiltered.filter((poke) => poke.name.toLowerCase().includes(nameFilter.toLowerCase()));
-			hasName ? setFilteredPokemon(nameTypeFiltered) : setFilteredPokemon(typeFiltered)
+			hasName ? setFilteredPokemon(nameTypeFiltered) : setFilteredPokemon(typeFiltered);
+			handlePageChange(null, 1)
 	}
 
 	// SortBy
 	const handleSortChange = (e) => {
-		console.log(e.target.value);
 		let sortBy = e.target.value;
 		sortPokemon(sortBy)
 		if (sortBy !== '') {
@@ -99,43 +100,43 @@ function App() {
 		if (sortBy === 'ID') {
 			sortCriteria = (a, b) => a.id > b.id ? 1 : -1;
 			}
-		else if (sortBy === 'name') {
+		else if (sortBy === 'Name') {
 			sortCriteria = (a, b) => a.name > b.name ? 1 : -1;
 		}
-		else if (sortBy === 'type') {
+		else if (sortBy === 'Type') {
 			sortCriteria = (a, b) => a.types[0].type.name > b.types[0].type.name ? 1 : -1;
 		}
 		else if (sortBy === 'HP') {
 			sortCriteria = (a, b) => a.stats[0].base_stat < b.stats[0].base_stat ? 1 : -1;
 		}
-		else if (sortBy === 'attack') {
+		else if (sortBy === 'Attack') {
 			sortCriteria = (a, b) => a.stats[1].base_stat < b.stats[1].base_stat ? 1 : -1;
 		}
-		else if (sortBy === 'defense') {
+		else if (sortBy === 'Defense') {
 			sortCriteria = (a, b) => a.stats[2].base_stat < b.stats[2].base_stat ? 1 : -1;
 		}
-		else if (sortBy === 'specialAttack') {
+		else if (sortBy === 'Special Attack') {
 			sortCriteria = (a, b) => a.stats[3].base_stat < b.stats[3].base_stat ? 1 : -1;
 		}
-		else if (sortBy === 'specialDefense') {
+		else if (sortBy === 'Special Defense') {
 			sortCriteria = (a, b) => a.stats[4].base_stat < b.stats[4].base_stat ? 1 : -1;
 		}
-		else if (sortBy === 'speed') {
+		else if (sortBy === 'Speed') {
 			sortCriteria = (a, b) => a.stats[5].base_stat < b.stats[5].base_stat ? 1 : -1;
 		}
 		setFilteredPokemon((poke)=>[...poke.sort(sortCriteria)])
-		console.log(filteredPokemon)
+		handlePageChange(null, 1)
 	}
 
 	// PAGINATION
-	const [currentPage, setCurrentPage] = useState(1);
-  	const [pokemonPerPage] = useState(20);
-	const indexOfLastPokemon = currentPage * pokemonPerPage;
+	const [page, setpage] = useState(1);
+  	const [pokemonPerPage] = useState(12);
+	const indexOfLastPokemon = page * pokemonPerPage;
   	const indexOfFirstPokemon = indexOfLastPokemon - pokemonPerPage;
   	const currentPokemon = filteredPokemon.slice(indexOfFirstPokemon, indexOfLastPokemon);
 	
 	const handlePageChange = (event, value) => {
-		setCurrentPage(value);
+		setpage(value);
 	};
 
 	// RENDER
@@ -156,15 +157,9 @@ function App() {
 						pokemonPerPage={pokemonPerPage}
 						totalPokemon={filteredPokemon.length}
 						handlePageChange={handlePageChange}
-						currentPage={currentPage}
+						page={page}
 					/>
 					<Pokemon pokemon={currentPokemon} loading={loading} />
-					<BasicPagination
-						pokemonPerPage={pokemonPerPage}
-						totalPokemon={filteredPokemon.length}
-						handlePageChange={handlePageChange}
-						currentPage={currentPage}
-					/>
 				</div>
 			)}
 		

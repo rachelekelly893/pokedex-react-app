@@ -13,17 +13,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BasicPagination({ pokemonPerPage, currentPage, totalPokemon, handlePageChange }) {
+export default function BasicPagination({ pokemonPerPage, page, totalPokemon, handlePageChange }) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <Pagination 
       count={Math.round(totalPokemon/pokemonPerPage)} 
-      currentPage={currentPage}
-      defaultPage={currentPage} 
-      siblingCount={2} 
-      boundaryCount={1} 
+      page={page}
+      defaultPage={1} 
+      siblingCount={3} 
+      boundaryCount={2} 
       color="secondary"  
       onChange={handlePageChange} 
       />

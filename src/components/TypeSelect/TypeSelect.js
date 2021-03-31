@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 const TypeSelect = ({ handleTypeChange }) => {
 
     const classes = useStyles();
+    const types = ["bug", "dark", "dragon", "electric", "fairy", "fighting", "fire", "flying", "ghost", "grass", "ground", "ice", "normal", "poison", "psychic", "psychic", "steel", "water"]
 
     return (
       <div>
@@ -35,24 +36,8 @@ const TypeSelect = ({ handleTypeChange }) => {
           onChange={handleTypeChange}
         >
             <MenuItem value="">All</MenuItem>
-            <MenuItem value="bug">Bug</MenuItem>
-            <MenuItem value="dark">Dark</MenuItem>
-            <MenuItem value="dragon">Dragon</MenuItem>
-            <MenuItem value="electric">Electric</MenuItem>
-            <MenuItem value="fairy">Fairy</MenuItem>
-            <MenuItem value="fighting">Fighting</MenuItem>
-            <MenuItem value="fire">Fire</MenuItem>
-            <MenuItem value="flying">Flying</MenuItem>
-            <MenuItem value="ghost">Ghost</MenuItem>
-            <MenuItem value="grass">Grass</MenuItem>
-            <MenuItem value="ground">Ground</MenuItem>
-            <MenuItem value="ice">Ice</MenuItem>
-            <MenuItem value="normal">Normal</MenuItem>
-            <MenuItem value="poison">Poison</MenuItem>
-            <MenuItem value="psychic">Psychic</MenuItem>
-            <MenuItem value="rock">Rock</MenuItem>
-            <MenuItem value="steel">Steel</MenuItem>
-            <MenuItem value="water">Water</MenuItem>
+            {types.map((type, i) => {
+            return <MenuItem value={type} key={i}> {type}</MenuItem>})}
           </Select>
         </FormControl> 
         </div>

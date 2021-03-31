@@ -11,7 +11,15 @@ const Pokemon = ({ pokemon, loading }) => {
     <div className="grid-container">
 		{pokemon.map((pokemon, i) => {
       if (pokemon === undefined) {
-        return 
+        return <div>
+          <h2>Pokemon Not Found</h2>
+          <br/>
+          <p>404 error</p>
+          <br/>
+          <p>Could not Retrieve Pokemon</p>
+          <p>Data From API</p>
+          </div>
+
       } else {
 		return <Card key={i} pokemon={pokemon} />;}
 		})}
