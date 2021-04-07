@@ -1,0 +1,8 @@
+.Charts {
+    text-align: center;
+    padding: 1em;
+}
+#chart1, #chart2, #chart3 {
+display: inline-block;
+padding: 1em;
+}

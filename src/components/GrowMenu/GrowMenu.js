@@ -10,7 +10,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '../../images/580b57fcd9996e24bc43c31f.png';
 
-import AboutDialog from '../AboutDialog/AboutDialog'
+import AboutDialog from '../AboutDialog/AboutDialog';
+import TypesDialog from '../TypesDialog/TypesDialog';
+import StatsDialog from '../StatsDialog/StatsDialog';
+import GensDialog from '../GensDialog/GensDialog';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -21,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function MenuListComposition() {
+export default function MenuListComposition({filteredPokemon}) {
 	const classes = useStyles();
 	const [ open, setOpen ] = React.useState(false);
 	const anchorRef = React.useRef(null);
@@ -59,15 +62,39 @@ export default function MenuListComposition() {
 	);
 
 	// DIALOGS
-	const [ dialogOpen, setDialogOpen ] = useState(false);
+	const [ aboutDialogOpen, setAboutDialogOpen ] = useState(false);
+	const [ typesDialogOpen, setTypesDialogOpen ] = useState(false);
+	const [ statsDialogOpen, setStatsDialogOpen ] = useState(false);
+	const [ gensDialogOpen, setGensDialogOpen ] = useState(false);
 	const [ selectedValue, setSelectedValue ] = useState('');
 
-	const handleDialogClickOpen = () => {
-		setDialogOpen(true);
+	const handleAboutDialogClickOpen = () => {
+		setAboutDialogOpen(true);
+	};
+	const handleTypesDialogClickOpen = () => {
+		setTypesDialogOpen(true);
+	};
+	const handleStatsDialogClickOpen = () => {
+		setStatsDialogOpen(true);
+	};
+	const handleGensDialogClickOpen = () => {
+		setGensDialogOpen(true);
 	};
 
-	const handleDialogClose = (value) => {
-		setDialogOpen(false);
+	const handleAboutDialogClose = (value) => {
+		setAboutDialogOpen(false);
+		setSelectedValue(value);
+	};
+	const handleTypesDialogClose = (value) => {
+		setTypesDialogOpen(false);
+		setSelectedValue(value);
+	};
+	const handleStatsDialogClose = (value) => {
+		setStatsDialogOpen(false);
+		setSelectedValue(value);
+	};
+	const handleGensDialogClose = (value) => {
+		setGensDialogOpen(false);
 		setSelectedValue(value);
 	};
 
@@ -94,10 +121,14 @@ export default function MenuListComposition() {
 						<Paper>
 							<ClickAwayListener onClickAway={handleClose}>
 								<MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-									<MenuItem onClick={handleDialogClickOpen}>About The App</MenuItem>
-									<MenuItem >About Types</MenuItem>
-									<MenuItem >About Stats</MenuItem>
-									<AboutDialog selecetedValue={selectedValue} dialogOpen={dialogOpen} onDialogClose={handleDialogClose} />
+									<MenuItem onClick={handleAboutDialogClickOpen}>About The App</MenuItem>
+									<MenuItem onClick={handleTypesDialogClickOpen}>About Types</MenuItem>
+									<MenuItem onClick={handleStatsDialogClickOpen}>About Stats</MenuItem>
+									<MenuItem onClick={handleGensDialogClickOpen}>About Generations</MenuItem>
+									<AboutDialog selecetedValue={selectedValue} dialogOpen={aboutDialogOpen} onDialogClose={handleAboutDialogClose} />
+									<TypesDialog selecetedValue={selectedValue} dialogOpen={typesDialogOpen} onDialogClose={handleTypesDialogClose} filteredPokemon={filteredPokemon} />
+									<StatsDialog selecetedValue={selectedValue} dialogOpen={statsDialogOpen} onDialogClose={handleStatsDialogClose} filteredPokemon={filteredPokemon} />
+									<GensDialog selecetedValue={selectedValue} dialogOpen={gensDialogOpen} onDialogClose={handleGensDialogClose} filteredPokemon={filteredPokemon} />
 								</MenuList>
 							</ClickAwayListener>
 						</Paper>

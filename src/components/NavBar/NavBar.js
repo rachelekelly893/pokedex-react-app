@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 	  }
 }));
 
-const NavBar = ({ handleNameChange, handleTypeChange, handleSortChange}) => {
+const NavBar = ({ handleNameChange, handleTypeChange, handleSortChange, filteredPokemon}) => {
 	const classes = useStyles();
 
 	function refreshPage() {
@@ -84,7 +84,7 @@ const NavBar = ({ handleNameChange, handleTypeChange, handleSortChange}) => {
 		<div className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
-					<GrowMenu />
+					<GrowMenu filteredPokemon={filteredPokemon}/>
 					<div className={classes.logoDiv}>
 						<img src={pokedexLogo} alt="pokedex logo" height='100em' className={classes.logo} />
 					</div> 
